@@ -112,62 +112,8 @@ find . -name 'luci-app-wol' | xargs -i rm -rf {}
 # 全部作者源码公共diy.sh文件
 ################################################################################################################
 Diy_all() {
-git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/fszok/fz-package "${Home}"/fz-package
-cp -Rf "${Home}"/fz-package/* "${Home}" && rm -rf "${Home}"/fz-package
-
-if [[ ${REGULAR_UPDATE} == "true" ]]; then
-	git clone https://github.com/shidahuilang/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
-	[[ -f "${PATH1}/AutoUpdate.sh" ]] && cp -Rf "${PATH1}"/AutoUpdate.sh package/base-files/files/bin/AutoUpdate.sh
-	[[ -f "${PATH1}/replace.sh" ]] && cp -Rf "${PATH1}"/replace.sh package/base-files/files/bin/replace.sh
-fi
-[[ -f "${PATH1}/openwrt.sh" ]] && cp -Rf "${PATH1}"/openwrt.sh package/base-files/files/sbin/openwrt
-[[ -f "${PATH1}/tools.sh" ]] && cp -Rf "${PATH1}"/tools.sh package/base-files/files/sbin/tools
-chmod 775 package/base-files/files/sbin/openwrt
-chmod 775 package/base-files/files/sbin/tools
-
-if [[ "${REPO_BRANCH}" == "master" ]]; then
-	cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
-	cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/LEDE/patches/* "${PATH1}/patches"
-elif [[ "${REPO_BRANCH}" == "main" ]]; then
-	cp -Rf "${Home}"/build/common/LIENOL/files "${Home}"
-	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
-elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-	cp -Rf "${Home}"/build/common/TIANLING/files "${Home}"
-	cp -Rf "${Home}"/build/common/TIANLING/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/TIANLING/patches/* "${PATH1}/patches"
-	curl -fsSL https://raw.githubusercontent.com/shidahuilang/common/main/Convert/1806-default-settings > ${Home}/package/emortal/default-settings/files/99-default-settings
-elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-	cp -Rf "${Home}"/build/common/MORTAL/files "${Home}"
-	cp -Rf "${Home}"/build/common/MORTAL/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/MORTAL/patches/* "${PATH1}/patches"
-	chmod -R 777 ${Home}/build/common/Convert
-	cp -Rf ${Home}/build/common/Convert/* "${Home}"
-	/bin/bash Convert.sh
-fi
-if [ -n "$(ls -A "${PATH1}/diy" 2>/dev/null)" ]; then
-	cp -Rf "${PATH1}"/diy/* "${Home}"
-fi
-if [ -n "$(ls -A "${PATH1}/files" 2>/dev/null)" ]; then
-	cp -Rf "${PATH1}/files" "${Home}" && chmod -R +x ${Home}/files
-fi
-if [ -n "$(ls -A "${PATH1}/patches" 2>/dev/null)" ]; then
-	find "${PATH1}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward --no-backup-if-mismatch"
-fi
-if [[ "${REPO_BRANCH}" == "master" ]]; then
-	sed -i 's/distversion)%>/distversion)%><!--/g' package/lean/autocore/files/*/index.htm
-	sed -i 's/luciversion)%>)/luciversion)%>)-->/g' package/lean/autocore/files/*/index.htm
-	sed -i 's#localtime  = os.date()#localtime  = os.date("%Y-%m-%d") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X")#g' package/lean/autocore/files/*/index.htm
-fi
-if [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-	sed -i 's/distversion)%>/distversion)%><!--/g' package/emortal/autocore/files/*/index.htm
-	sed -i 's/luciversion)%>)/luciversion)%>)-->/g' package/emortal/autocore/files/*/index.htm
-	sed -i 's#localtime  = os.date()#localtime  = os.date("%Y-%m-%d") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X")#g' package/emortal/autocore/files/*/index.htm
-fi
-if [ -n "$(ls -A "feeds/luci/applications/luci-app-rebootschedule" 2>/dev/null)" ]; then
-	chmod -R 775 feeds/luci/applications/luci-app-rebootschedule
-fi
+DIY_GET_COMMON_SH
+git clone -b $REPO_BRANCH --single-branch https://github.com/fszok/fz-package package/danshui
 }
 
 ################################################################################################################
