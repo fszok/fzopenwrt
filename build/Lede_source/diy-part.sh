@@ -10,10 +10,10 @@
 
 
 cat >$NETIP <<-EOF
-uci set network.lan.ipaddr='192.168.2.1'                                    # IPv4 地址(openwrt后台地址)
+uci set network.lan.ipaddr='192.168.5.1'                                    # IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'                                 # IPv4 子网掩码
-#uci set network.lan.gateway='192.168.2.1'                                   # IPv4 网关
-#uci set network.lan.broadcast='192.168.2.255'                               # IPv4 广播
+#uci set network.lan.gateway='192.168.5.1'                                   # IPv4 网关
+#uci set network.lan.broadcast='192.168.5.255'                               # IPv4 广播
 uci set network.lan.dns='223.5.5.5 114.114.114.114'                         # DNS(多个DNS要用空格分开)
 uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
 uci commit network                                                          # 不要删除跟注释,除非上面全部删除或注释掉了
@@ -25,7 +25,7 @@ EOF
 
 sed -i 's/luci-theme-bootstrap/luci-theme-opentomcat/g' feeds/luci/collections/luci/Makefile            # 选择argon为默认主题
 #sed -i "/uci commit luci/i\uci set luci.main.mediaurlbase=/luci-static/neobird" package/lean/default-settings/files/zzz-default-settings
-sed -i "s/OpenWrt /大灰狼 $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ                           # 增加个性名字 ${Author} 默认为你的github帐号
+sed -i "s/OpenWrt /狗哥 $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ                           # 增加个性名字 ${Author} 默认为你的github帐号
 
 sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ                                                             # 设置密码为空
 
