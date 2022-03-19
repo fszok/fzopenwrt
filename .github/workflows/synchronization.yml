@@ -7,7 +7,7 @@
 #
 
 
-name: 同步大灰狼仓库
+name: 同步狗哥仓库
 on:
   workflow_dispatch:
     inputs:
