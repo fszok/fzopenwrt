@@ -33,7 +33,7 @@ find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
 find . -name 'UnblockNeteaseMusic-Go' -o -name 'UnblockNeteaseMusic' -o -name 'luci-app-unblockmusic' | xargs -i rm -rf {}
 
 git clone https://github.com/fszok/luci-theme-ifit package/luci-theme-ifit
-git clone https://github.com/fszok/luci-theme-mcat
+git clone https://github.com/fszok/luci-theme-mcat package/luci-theme-mcat
 git clone https://github.com/shidahuilang/openwrt-passwall package/luci-app-passwall
 #git clone https://github.com/xiaorouji/openwrt-passwall package/openwrt-passwall
 #git clone https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
