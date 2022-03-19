@@ -112,8 +112,8 @@ find . -name 'luci-app-wol' | xargs -i rm -rf {}
 # 全部作者源码公共diy.sh文件
 ################################################################################################################
 Diy_all() {
-git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/fszok/fz-package "${Home}"/openwrt-package
-cp -Rf "${Home}"/openwrt-package/* "${Home}" && rm -rf "${Home}"/openwrt-package
+git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/fszok/fz-package "${Home}"/fz-package
+cp -Rf "${Home}"/fz-package/* "${Home}" && rm -rf "${Home}"/fz-package
 
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
 	git clone https://github.com/shidahuilang/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
