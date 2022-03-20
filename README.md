@@ -13,7 +13,7 @@ cd openwrt && make menuconfig
 - 然后在此仓库Settings->Secrets中添加个名字为REPO_TOKEN的Secret,填入token获得的key
 - TG通知Settings->Secrets中添加个名字为TELEGRAM_BOT_TOKEN和TELEGRAM_CHAT_ID
 
-## 自动更新固件
+## 打开工具箱
 首先需要打开 Openwrt 主页,点击系统-TTYD 终端或命令窗,或者使用putty
 输入openwrt即可进入固件升级菜单
 输入 tools 即可打开工具箱
