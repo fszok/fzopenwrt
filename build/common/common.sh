@@ -1,7 +1,6 @@
 
 #!/bin/bash
-# https://github.com/shidahuilang/langlang
-# common Module by 大灰狼
+# common Module by fz
 # matrix.target=${Modelfile}
 
 TIME() {
@@ -27,6 +26,12 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 # LEDE源码通用diy.sh文件
 ################################################################################################################
 Diy_lede() {
+# 给源码做个记号
+RECOGNIZE="${Home}/package/base-files/files/etc/openwrt_release"
+sed -i '/DISTRIB_RECOGNIZE/d' $RECOGNIZE
+echo -e "\nDISTRIB_RECOGNIZE='18'" >> "${RECOGNIZE}" && sed -i '/^\s*$/d' "${RECOGNIZE}"
+##
+
 find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'mentohust' | xargs -i rm -rf {}
 find . -name 'luci-app-ipsec-vpnd' -o -name 'luci-app-wol' | xargs -i rm -rf {}
 find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
@@ -117,14 +122,12 @@ Diy_all() {
 git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/281677160/openwrt-package "${Home}"/package/openwrt-package
 
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
-	git clone https://github.com/shidahuilang/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
+	git clone https://github.com/281677160/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
 	[[ -f "${PATH1}/AutoUpdate.sh" ]] && cp -Rf "${PATH1}"/AutoUpdate.sh package/base-files/files/bin/AutoUpdate.sh
 	[[ -f "${PATH1}/replace.sh" ]] && cp -Rf "${PATH1}"/replace.sh package/base-files/files/bin/replace.sh
 fi
 [[ -f "${PATH1}/openwrt.sh" ]] && cp -Rf "${PATH1}"/openwrt.sh package/base-files/files/sbin/openwrt
-[[ -f "${PATH1}/tools.sh" ]] && cp -Rf "${PATH1}"/tools.sh package/base-files/files/sbin/tools
-chmod 775 package/base-files/files/sbin/openwrt
-chmod 775 package/base-files/files/sbin/tools
+chmod 777 package/base-files/files/sbin/openwrt
 
 if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
